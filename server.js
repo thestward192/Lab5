@@ -22,6 +22,4 @@ io.on('connection', function (socket) {
   });
 });
 
-http.listen(port, function () {
-  console.log('listening on *:' + port);
-});
+app.listen(3000, () => console.log('Servidor escuchando en el puerto 3000'));
