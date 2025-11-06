@@ -44,7 +44,7 @@ jobs:
           config: 'p/owasp-top-ten'
 
       - name: Setup Snyk (requires SNYK_TOKEN secret)
-        uses: snyk/actions/setup@v1.2.0
+        uses: snyk/actions/setup@master
         with:
           monitor: false
         env:
