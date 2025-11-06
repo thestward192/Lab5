@@ -12,7 +12,7 @@
   },
   "rules": {
     "semi": ["error", "always"],
-    "quotes": ["error", "single"],
+    "quotes": ["error", "double"],
     "indent": ["warn", 2, { "SwitchCase": 1 }],
     "brace-style": ["warn", "1tbs"],
     "curly": ["warn", "multi-line"],
