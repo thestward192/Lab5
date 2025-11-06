@@ -2,9 +2,9 @@ name: Security and Quality Pipeline
 
 on:
   push:
-    branches: ["main"]
+    branches: ["*"]
   pull_request:
-    branches: ["main"]
+    branches: ["*"]
 
 jobs:
   security:
@@ -61,10 +61,3 @@ jobs:
 
       - name: Enforce minimum coverage (80%)
         run: npx nyc check-coverage --lines 80 --functions 80 --branches 80
-
-      - name: Upload coverage report (artifact)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage || coverage/*.json || coverage/lcov.info
