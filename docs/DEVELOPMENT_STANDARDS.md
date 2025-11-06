@@ -64,19 +64,16 @@ Lenguaje principal: JavaScript (Node.js, CommonJS)
 ## 2. Prácticas de Calidad Obligatorias
 
 - Linting (obligatorio)
-
   - E ntes de commitear o abrir un PR.
   - Herramienta: ESLint. Reglas base alineadas a estas normas, con tolerancia para el código existente a fin de evitar refactors grandes.
   - Comando: `npm run lint`.
 
 - Build/Compilación (obligatorio)
-
   - Este proyecto no requiere transpilación; la verificación de “build” ejecuta el linter como chequeo mínimo de integridad.
   - La build debe pasar localmente y en CI sin errores.
   - Comando: `npm run build` (alias de `npm run lint`).
 
 - BDD (Behavior-Driven Development) (obligatorio)
-
   - Se usa Cucumber.js para describir el comportamiento desde la perspectiva del usuario.
   - Estructura:
     - `features/*.feature` para especificaciones en Gherkin.
