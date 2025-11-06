@@ -1,0 +1,49 @@
+
+
+Este proyecto forma parte del curso Seguridad Informática de la Universidad Nacional de Costa Rica.
+
+Objetivo: Implementar el punto 2 del proyecto SSDLC, que consiste en configurar un pipeline de GitHub Actions que incluya:
+
+1. Linting:
+   - Usar ESLint para detectar errores sintácticos y violaciones de estilo.
+   - El proyecto ya incluye `.eslintrc.json` y `.eslintignore`.
+   - Ejecutar `npx eslint .` en el pipeline.
+
+2. Unit Testing basado en BDD:
+   - Las pruebas están en `test/test.js`.
+   - Usan `describe` e `it` como estructura BDD.
+   - Ejecutar `npm test` en el pipeline.
+   - El pipeline debe detenerse si las pruebas fallan.
+
+3. SAST (Static Application Security Testing):
+   - Integrar Semgrep con reglas OWASP Top 10.
+   - Integrar Snyk para escanear código fuente y dependencias.
+   - El pipeline debe fallar si se detectan vulnerabilidades graves.
+   - Snyk requiere el token `SNYK_TOKEN` como secreto en GitHub.
+
+4. Cobertura de código:
+   - Usar `nyc` para medir cobertura.
+   - Falla si la cobertura es menor al 80%.
+
+5. Validación de dependencias:
+   - Ejecutar `npm audit --audit-level=high`.
+
+6. Formato y convenciones:
+   - Usar Prettier para verificar formato.
+   - Ejecutar `npx prettier --check .`.
+
+Estructura del proyecto:
+
+Lab5/
+├── .github/workflows/           → Aquí debe ir el archivo `security.yml`
+├── docs/sbom/                  → Documentación del SBOM y estándares
+├── features/steps/            → Archivos `.feature` y `.steps.js` para pruebas BDD
+├── libs/unalib.js              → Librerías internas
+├── test/test.js                → Pruebas unitarias
+├── index.html                  → Frontend base
+├── server.js                   → Backend principal
+├── package.json                → Configuración del proyecto
+├── .eslintrc.json              → Reglas de linting
+├── .eslintignore               → Exclusiones de linting
+
+Este pipeline debe ejecutarse en cada push y pull request a `main`, y reflejar buenas prácticas de desarrollo seguro.
