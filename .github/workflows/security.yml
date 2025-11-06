@@ -1,0 +1,73 @@
+name: Security and Quality Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  security:
+    name: Security & Quality checks
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint (fail on warnings)
+        run: npx eslint . --max-warnings=0
+
+      - name: Prettier format check
+        run: npx prettier --check .
+
+      - name: npm audit (fail on high+)
+        run: npm audit --audit-level=high
+
+      - name: Semgrep SAST (OWASP Top 10)
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: 'p/owasp-top-ten'
+      
+      - name: Setup Snyk (requires SNYK_TOKEN secret)
+        uses: snyk/actions/setup@v2
+        with:
+         
+          # uses the SNYK_TOKEN from secrets via env below
+          monitor: false
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Snyk test (fail on >= high)
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          # run Snyk test and fail pipeline if vulnerabilities >= high
+          npx snyk test --severity-threshold=high
+
+      - name: Run tests with nyc (collect coverage)
+        run: npx nyc --reporter=lcov --reporter=text npm test
+
+      - name: Enforce minimum coverage (80%)
+        run: npx nyc check-coverage --lines 80 --functions 80 --branches 80
+
+      - name: Upload coverage report (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage || coverage/*.json || coverage/lcov.info
