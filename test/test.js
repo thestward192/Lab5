@@ -96,6 +96,7 @@ describe("funcion validateMessage - Bloqueo de scripts", function () {
     var result = JSON.parse(val.validateMessage(input));
 
     // Verificar que el mensaje fue bloqueado
+    //prueba de comentario
     assert.equal(result.mensaje, "Contenido bloqueado por seguridad");
     assert.equal(result.color, "#FF0000");
   });
