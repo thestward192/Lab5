@@ -42,12 +42,10 @@ jobs:
         uses: returntocorp/semgrep-action@v1
         with:
           config: 'p/owasp-top-ten'
-      
+
       - name: Setup Snyk (requires SNYK_TOKEN secret)
-        uses: snyk/actions/setup@v2
+        uses: snyk/actions/setup@master
         with:
-         
-          # uses the SNYK_TOKEN from secrets via env below
           monitor: false
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -56,7 +54,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          # run Snyk test and fail pipeline if vulnerabilities >= high
           npx snyk test --severity-threshold=high
 
       - name: Run tests with nyc (collect coverage)
