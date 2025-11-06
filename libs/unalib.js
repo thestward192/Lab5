@@ -297,16 +297,16 @@ module.exports = {
           
           // Verificar si es una imagen con validación segura
           if(this.validateImageUrl(obj.mensaje)){
-            console.log("Es una imagen válida!")
+            console.log('Es una imagen válida!');
             obj.mensaje = this.getImageTag(obj.mensaje);
           }
           // Verificar si es un video con validación segura
           else if(this.validateVideoUrl(obj.mensaje)){
-            console.log("Es un video válido!")
+            console.log('Es un video válido!');
             obj.mensaje = this.getEmbeddedCode(obj.mensaje);
           }
           else{
-            console.log("Es un texto!")
+            console.log('Es un texto!');
             // Para texto normal, escapar HTML para prevenir XSS
             obj.mensaje = this.escapeHtml(obj.mensaje);
           }
